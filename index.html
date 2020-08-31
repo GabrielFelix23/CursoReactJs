@@ -13,14 +13,34 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <script type="text/babel">
-        function MeuComponente(){
-            return(
-                <div>
-                    <h1>Olá React!</h1>
-                </div>
-            )
+        class CompA extends React.Component{
+            render(){
+                return(
+                    <h3>CompA</h3>
+                )
+            }
         }
-           
+        
+        class CompB extends React.Component{
+            render(){
+                return(
+                    <h3>CompB</h3>
+                )
+            }
+        }
+        
+        
+        class MeuComponente extends React.Component{
+            render(){
+                return(
+                    <div>
+                        <CompA/>
+                        <hr/>
+                        <CompB/>
+                    </div>
+                )
+            }
+        }
 
         const root = document.getElementById('root')
         ReactDOM.render(<MeuComponente/>, root)
