@@ -14,22 +14,18 @@
 
     <script type="text/babel">
         
-        function MeuComponente(props){
-            return(
-                <h3>Olá {props.nome}</h3>
-            )
-        }
-
-        class CompA extends React.Component{
+        class Adicao extends React.Component{
             render(){
                 return(
-                    <h3>Olá {this.props.nome}!</h3>
+                    <div>
+                        <p>A soma de {this.props.a} + {this.props.b} = {this.props.a + this.props.b}</p>
+                    </div>
                 )
             }
         }
 
         const root = document.getElementById('root')
-        ReactDOM.render(<CompA nome="Gabriel"/>, root)
+        ReactDOM.render(<Adicao a={10} b={20}/>, root)
     </script>
 </body>
 </html>
