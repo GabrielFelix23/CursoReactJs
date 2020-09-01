@@ -4,20 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>React Básico</title>
-
-    <style>
-        .red{
-            background-color: red;
-            color: white;
-            padding: 10px;
-        }
-
-        .green{
-            background-color: green;
-            color: white;
-            padding:10px;
-        }
-    </style>
 </head>
 <body>
 
@@ -28,20 +14,18 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <script type="text/babel">
-        function Tempo(){
-            const conteudo = (
-                <div>
-                    <h3>Tempo atual</h3>
-                    <p>Estamos na segunda hora: {new Date().toLocaleTimeString()}</p>
-                </div>
-            )
-            ReactDOM.render(
-                conteudo,
-                document.getElementById('root')
-            )
+        class App extends React.Component{
+            render(){
+                return(
+                    <h3 style={{background: "green", color: "white", padding: "10px"}}>Olá mundo!</h3>
+                )
+            }
         }
-
-        setInterval(Tempo, 1000)
+    
+        ReactDOM.render(
+            <App/>,
+            document.getElementById('root')
+        )
     </script>
 </body>
 </html>
