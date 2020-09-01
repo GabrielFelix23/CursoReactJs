@@ -28,40 +28,20 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <script type="text/babel">
-
-        class CompA extends React.Component{
-            render(){
-                return(
-                    <div className="red">
-                        <p>Texto do CompA</p>
-                    </div>
-                )
-            }
+        function Tempo(){
+            const conteudo = (
+                <div>
+                    <h3>Tempo atual</h3>
+                    <p>Estamos na segunda hora: {new Date().toLocaleTimeString()}</p>
+                </div>
+            )
+            ReactDOM.render(
+                conteudo,
+                document.getElementById('root')
+            )
         }
 
-        class CompB extends React.Component{
-            render(){
-                return(
-                    <div className="green">
-                        <p>Texto do CompB</p>
-                    </div>
-                )
-            }
-        }
-
-        class App extends React.Component{
-            render(){
-                return(
-                    <div>
-                       <CompA/>
-                       <CompB/> 
-                    </div>
-                )
-            }
-        }
-
-        const root = document.getElementById('root')
-        ReactDOM.render(<App/> , root)
+        setInterval(Tempo, 1000)
     </script>
 </body>
 </html>
