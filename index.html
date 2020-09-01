@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>React Básico</title>
+
+    <style>
+        .red{
+            background-color: red;
+            color: white;
+            padding: 10px;
+        }
+
+        .green{
+            background-color: green;
+            color: white;
+            padding:10px;
+        }
+    </style>
 </head>
 <body>
+
     <div id="root"></div>
 
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
@@ -13,19 +28,40 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <script type="text/babel">
-        
-        class Adicao extends React.Component{
+
+        class CompA extends React.Component{
+            render(){
+                return(
+                    <div className="red">
+                        <p>Texto do CompA</p>
+                    </div>
+                )
+            }
+        }
+
+        class CompB extends React.Component{
+            render(){
+                return(
+                    <div className="green">
+                        <p>Texto do CompB</p>
+                    </div>
+                )
+            }
+        }
+
+        class App extends React.Component{
             render(){
                 return(
                     <div>
-                        <p>A soma de {this.props.a} + {this.props.b} = {this.props.a + this.props.b}</p>
+                       <CompA/>
+                       <CompB/> 
                     </div>
                 )
             }
         }
 
         const root = document.getElementById('root')
-        ReactDOM.render(<Adicao a={10} b={20}/>, root)
+        ReactDOM.render(<App/> , root)
     </script>
 </body>
 </html>
