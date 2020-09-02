@@ -17,15 +17,22 @@
 
         class App extends React.Component{
             state = {
-                nome: "Gabriel",
-                idade: 22
+                nome: "Gabriel"
+            }
+
+            clicou = this.clicou.bind(this)
+
+            clicou(){
+                this.setState({
+                    nome: "Felix"
+                })
             }
 
             render(){
                 return(
                     <div>
-                        <h3>Olá {this.state.nome}</h3>
-                        <h4>Você tem {this.state.idade}</h4>
+                        <p>Nome: {this.state.nome}</p>
+                        <button onClick={this.clicou}>Clique</button>
                     </div>
                 )
             }
