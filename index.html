@@ -15,24 +15,39 @@
 
     <script type="text/babel">
 
-        class App extends React.Component{
+        class Nome extends React.Component{
             state = {
-                nome: "Gabriel"
+                nome: this.props.nomeIni
             }
 
-            clicou = this.clicou.bind(this)
+            nomeClick = this.nomeClick.bind(this)
 
-            clicou(){
+            nomeClick(){
                 this.setState({
-                    nome: "Felix"
+                    nome: this.props.nomeFim
                 })
             }
 
             render(){
                 return(
                     <div>
-                        <p>Nome: {this.state.nome}</p>
-                        <button onClick={this.clicou}>Clique</button>
+                        <h3>Nome: {this.state.nome}</h3>
+                        <button onClick={this.nomeClick}>Alterar</button>
+                    </div>
+                )
+            }
+        }
+        
+        
+        class App extends React.Component{
+            render(){
+                return(
+                    <div>
+                        <h2>Exercício</h2>
+                        <hr/>
+                        <Nome nomeIni="Gabriel" nomeFim="Gabriella"/>
+                        <Nome nomeIni="Felix" nomeFim="Felicia"/>
+                        <Nome nomeIni="Silva" nomeFim="Silvia"/>
                     </div>
                 )
             }
