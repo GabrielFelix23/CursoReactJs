@@ -16,22 +16,25 @@
     <script type="text/babel">        
         
         class App extends React.Component{
-
-            metodo = (texto) => {
-                console.log(texto)
-            }
-
             render(){
                 return(
                     <div>
-                        <button onClick={() => this.metodo("Olá mundo")}>Clicar</button>
+                        <CompA nome="gg"/>
                     </div>
                 )
             }
         }
 
+        class CompA extends React.Component{
+            render(){
+                return(
+                    <p>Nome: {this.props.nome}</p>
+                )
+            }
+        }
+
         ReactDOM.render(
-            <App />,
+            <App/>,
             document.getElementById('root')
         )
     </script>
