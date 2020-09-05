@@ -13,41 +13,18 @@
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-    <script type="text/babel">
-
-        class Nome extends React.Component{
-            state = {
-                nome: this.props.nomeIni
-            }
-
-            nomeClick = this.nomeClick.bind(this)
-
-            nomeClick(){
-                this.setState({
-                    nome: this.props.nomeFim
-                })
-            }
-
-            render(){
-                return(
-                    <div>
-                        <h3>Nome: {this.state.nome}</h3>
-                        <button onClick={this.nomeClick}>Alterar</button>
-                    </div>
-                )
-            }
-        }
-        
+    <script type="text/babel">        
         
         class App extends React.Component{
+
+            metodo = (texto) => {
+                console.log(texto)
+            }
+
             render(){
                 return(
                     <div>
-                        <h2>Exercício</h2>
-                        <hr/>
-                        <Nome nomeIni="Gabriel" nomeFim="Gabriella"/>
-                        <Nome nomeIni="Felix" nomeFim="Felicia"/>
-                        <Nome nomeIni="Silva" nomeFim="Silvia"/>
+                        <button onClick={() => this.metodo("Olá mundo")}>Clicar</button>
                     </div>
                 )
             }
