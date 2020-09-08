@@ -2,23 +2,35 @@ import React from 'react'
 
 class Membros extends React.Component{
     state = {
-        nome: this.props.nome
+        status: true
+    }
+
+    sair = this.sair.bind(this)
+    
+    sair(){
+        this.setState({status: false})
     }
 
     entrar = this.entrar.bind(this)
 
-    entrar(nome){
-        this.setState({
-            nome: nome
-        })
+    entrar(){
+        this.setState({status: true})
     }
 
     render(){
         return(
             <div>
-                <h2>Bem-vindo(a) {this.state.nome}</h2>
-                <button onClick={() => this.entrar("Gabriel")}>Entrar como Gabriel</button>
-                <button onClick={() => this.setState({nome: ""})}>Sair</button>
+              {this.state.status ? 
+                <div>
+                    <h2>Bem vindo ao sistema</h2>
+                    <button onClick={this.sair}>Sair</button>
+                </div> 
+                :
+                <div>
+                    <h2>Olá visitante, faça o seu login</h2>
+                    <button onClick={this.entrar}>Entrar no sistema</button>
+                </div>
+              }
             </div>
         )
     }
