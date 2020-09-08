@@ -2,39 +2,25 @@ import React from 'react'
 
 class App extends React.Component{
     state = {
-        estado: "",
-        contador: 0
+        hora:'00:00:00'
     }
 
-    aumentar = this.aumentar.bind(this)
-
-    aumentar(){
-        this.setState({
-            contador: this.state.contador += 1,
-            estado: "Aumentando"
-        })
+    componentDidMount(){
+        setInterval(() => {
+            this.setState({
+                hora: new Date().toLocaleTimeString()
+            })
+        }, 1000)
     }
 
-    diminuir = this.diminuir.bind(this)
-
-    diminuir(){
-        this.setState({
-            contador: this.state.contador -+ 1,
-            estado: "Diminuindo"
-        })
+    componentDidUpdate(){
+        console.log("Atualizou!!")
     }
 
     render(){
         return(
             <div>
-                <h1>Contador</h1>
-
-                <h3>
-                    <h5>{this.state.estado}</h5>
-                    <button onClick={this.diminuir}>-</button> 
-                    {this.state.contador} 
-                    <button onClick={this.aumentar}>+</button>
-                </h3>
+                <h1>Meu projeto {this.state.hora}</h1>
             </div>
         )
     }
