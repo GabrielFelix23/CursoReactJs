@@ -1,55 +1,41 @@
 import React from 'react'
 import './style.css'
+//https://sujeitoprogramador.com/rn-api/?api=posts
 
 class App extends React.Component{
 
     state = {
-        numero: 0,
-        botao: 'VAI'
+       nutri: []
     }
 
-    timer = null
-    vai = this.vai.bind(this)
-    limpar = this.limpar.bind(this)
-
-    vai(){
-        if(this.timer != null){
-            clearInterval(this.timer)
-            this.timer = null
-            this.setState({botao: "VAI"})
-        }
-        else{
-            this.timer = setInterval(() => {
-                this.setState({
-                    numero: this.state.numero += 0.1,
-                    botao: "PARAR"
-                })
-            }, 100)
-        }
-    }
-
-    limpar(){
-       if(this.timer != null){
-           clearInterval(this.timer)
-           this.timer = null
-       }
-
-       this.setState({
-           numero: 0,
-           botao: "VAI",
-       })
+    componentDidMount(){
+        let url = 'https://sujeitoprogramador.com/rn-api/?api=posts'
+        fetch(url)
+        .then((r) => r.json())
+        .then((json) => {
+            this.setState({nutri: json})
+        })
     }
 
     render(){
         return(
             <div className="container">
-                <img src={require("./Assets/cronometro.png")} className="img"/>
-                <a className="timer">{this.state.numero.toFixed(1)}</a>
+                <header>
+                    <strong>React Nutri</strong>
+                </header>
 
-                <div className="areaBtn">
-                    <a className="botao" onClick={this.vai}>{this.state.botao}</a>
-                    <a className="botao" onClick={this.limpar}>LIMPAR</a>
-                </div>
+                {this.state.nutri.map((item) => {
+                    return(
+                        <article key={item.id} className="post">
+                            <strong className="titulo">{item.titulo}</strong>
+                            <img src={item.capa} className="capa"/>
+                            <p className="subtitulo">{item.subtitulo}</p>
+                            <a className="botao" href="#">Acessar</a>
+                        </article>
+                    )
+                })
+
+                }
             </div>
         )
     }
