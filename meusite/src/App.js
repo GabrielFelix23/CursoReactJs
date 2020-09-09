@@ -1,50 +1,47 @@
 import React from 'react'
+import './estilo.css'
 
 class App extends React.Component{
+    frases = [
+        "frase 1",
+        "frase 2",
+        "frase 3",
+        "frase 4",
+        "frase 5",
+        "frase 6",
+    ]
 
     state = {
-        nome: '',
-        email: '',
-        senha: '',
-        error: ''
+        textoFrase: ''
     }
 
-    cadastrar = this.cadastrar.bind(this)
+    quebraBiscoito = this.quebraBiscoito.bind(this)
 
-    cadastrar(e){
-        const {nome, email, senha} = this.state
-
-        if(nome != '' && email != '' && senha != ''){
-            alert(`Nome: ${nome} \nEmail: ${email} \nSenha: ${senha}`)
-        }else{
-            this.setState({error: "Ops! Parece que esta faltando algo"})
-        }
-
-       
-
-        e.preventDefault()
+    quebraBiscoito(){
+        let numeroAleatorio = Math.floor(Math.random() * this.frases.length)
+        
+        this.setState({
+            textoFrase: '" ' + this.frases[numeroAleatorio] + ' "'
+        })
+        
     }
 
     render(){
         return(
+            <div className="container">
+                <img src={require("./Assets/biscoito.png")} className="img"/>
+                <h3 className="textoFrase">{this.state.textoFrase}</h3>
+                <Botao nome="Abrir Biscoito" acaoBotao={this.quebraBiscoito}/>
+            </div>
+        )
+    }
+}
+
+class Botao extends React.Component{
+    render(){
+        return(
             <div>
-                <h1>Novo usuario</h1>
-                {<p>{this.state.error}</p>}
-                <form onSubmit={this.cadastrar}>
-                    <label>Nome: </label>
-                    <input type="text" value={this.state.nome} 
-                    onChange={(e) => this.setState({nome: e.target.value})}/><br/>
-
-                    <label>Email: </label>
-                    <input type="email" value={this.state.email}
-                    onChange={(e) => this.setState({email: e.target.value})}/><br/>
-
-                    <label>Email: </label>
-                    <input type="password" value={this.state.senha}
-                    onChange={(e) => this.setState({senha: e.target.value})}/><br/>
-
-                    <button type="submit">Cadastras</button>
-                </form>
+                <button onClick={this.props.acaoBotao} className="botao">{this.props.nome}</button>
             </div>
         )
     }
