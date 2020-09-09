@@ -1,50 +1,59 @@
 import React from 'react'
-import './estilo.css'
+import './style.css'
 
 class App extends React.Component{
-    frases = [
-        "frase 1",
-        "frase 2",
-        "frase 3",
-        "frase 4",
-        "frase 5",
-        "frase 6",
-    ]
 
     state = {
-        textoFrase: ''
+        numero: 0,
+        botao: 'VAI'
     }
 
-    quebraBiscoito = this.quebraBiscoito.bind(this)
+    timer = null
+    vai = this.vai.bind(this)
+    limpar = this.limpar.bind(this)
 
-    quebraBiscoito(){
-        let numeroAleatorio = Math.floor(Math.random() * this.frases.length)
-        
-        this.setState({
-            textoFrase: '" ' + this.frases[numeroAleatorio] + ' "'
-        })
-        
+    vai(){
+        if(this.timer != null){
+            clearInterval(this.timer)
+            this.timer = null
+            this.setState({botao: "VAI"})
+        }
+        else{
+            this.timer = setInterval(() => {
+                this.setState({
+                    numero: this.state.numero += 0.1,
+                    botao: "PARAR"
+                })
+            }, 100)
+        }
+    }
+
+    limpar(){
+       if(this.timer != null){
+           clearInterval(this.timer)
+           this.timer = null
+       }
+
+       this.setState({
+           numero: 0,
+           botao: "VAI",
+       })
     }
 
     render(){
         return(
             <div className="container">
-                <img src={require("./Assets/biscoito.png")} className="img"/>
-                <h3 className="textoFrase">{this.state.textoFrase}</h3>
-                <Botao nome="Abrir Biscoito" acaoBotao={this.quebraBiscoito}/>
+                <img src={require("./Assets/cronometro.png")} className="img"/>
+                <a className="timer">{this.state.numero.toFixed(1)}</a>
+
+                <div className="areaBtn">
+                    <a className="botao" onClick={this.vai}>{this.state.botao}</a>
+                    <a className="botao" onClick={this.limpar}>LIMPAR</a>
+                </div>
             </div>
         )
     }
 }
 
-class Botao extends React.Component{
-    render(){
-        return(
-            <div>
-                <button onClick={this.props.acaoBotao} className="botao">{this.props.nome}</button>
-            </div>
-        )
-    }
-}
 
 export default App
