@@ -1,7 +1,6 @@
 import React from 'react'
-import Routes from './routes'
 
-class App extends React.Component{
+class Header extends React.Component{
 
     state = {
        
@@ -10,11 +9,12 @@ class App extends React.Component{
     render(){
         return(
             <div>
-                <Routes/>
+                Hearder meu projeto
+                <hr/>
             </div>
         )
     }
 }
 
 
-export default App
+export default Header
