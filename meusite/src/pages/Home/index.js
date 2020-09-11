@@ -31,7 +31,7 @@ class Home extends React.Component{
                             <article key={filme.id} className="filme">
                                 <strong>{filme.nome}</strong>
                                 <img src={filme.foto} alt="capa"/>
-                                <Link to="/">Acessar</Link>
+                                <Link to={`/filme/${filme.id}`}>Acessar</Link>
                             </article>
                         )
                     })}
