@@ -1,18 +1,26 @@
 import React from 'react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+
 import Home from './pages/Home'
-import Filme from './pages/Filme'
-import Header from './component/Header'
-import Erro from './pages/Erro/index'
+import Painel from './pages/Painel'
+import {autenticado} from './auth'
+
+const PrivateRoute = ({component: Component, ...rest}) => {
+    <Route {...rest} render={props => {
+        autenticado() ? (
+            <Component {...props}/>
+        ): (
+            <Redirect to={{pathname: '/', state: {from: props.location} }}/>
+        )
+    }}/>
+}
 
 const Routes = () => {
     return(
         <BrowserRouter>
-            <Header/>
             <Switch>
                 <Route exact path="/" component={Home}/>
-                <Route exact path="/filme/:id" component={Filme}/>
-                <Route path="*" component={Erro}/>
+                <Route exact path="/painel" component={Painel}/>
             </Switch>
         </BrowserRouter>
     )
