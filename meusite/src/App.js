@@ -74,9 +74,10 @@ export default class App extends Component {
      <div>
 
          <form onSubmit={this.cadastrar}>
+            <label>Nome</label><br/>
             <input type="text" value={this.state.nomeInput}
                 onChange={(e) => this.setState({nomeInput: e.target.value})}/><br/>
-
+            <label>Idade</label><br/>
             <input type="text" value={this.state.idadeInput}
                 onChange={(e) => this.setState({idadeInput: e.target.value})}/><br/>
 
