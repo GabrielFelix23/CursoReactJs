@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import firebase from 'firebase/app';
-import 'firebase/database';
+import firebase from 'firebase';
  
 export default class App extends Component {
-   constructor(props){
+    constructor(props){
  
      super(props);
      this.state={
@@ -30,21 +29,21 @@ export default class App extends Component {
             firebase.initializeApp(firebaseConfig);
         }
  
-}
+    }
  
     componentDidMount(){
         firebase.database().ref('token').on('value', (snapshot)=>{
             let state = this.state;
-            state.token = snapshot.val()
+            state.token = snapshot.val().token
             this.setState(state);
         })
     }
     componentDidMount(){
         firebase.database().ref('usuarios').child(1).on('value', (snapshot)=>{
-            let state = this.state;
-            state.nome = snapshot.val().nome
-            state.idade = snapshot.val().idade
-            this.setState(state);
+            this.setState({
+                nome: snapshot.val().nome,
+                idade: snapshot.val().idade
+            })
         })
     }
 
