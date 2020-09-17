@@ -7,10 +7,14 @@ export default class App extends Component {
  
      super(props);
      this.state={
-       token:'carregando',
-       idade: '',
-       nome: ''
+        nomeInput: '',
+        idadeInput: '',
+        token: 'Carregando...',
+        idade: '',
+        nome: '',
      }
+
+     this.cadastrar = this.cadastrar.bind(this)
  
      let firebaseConfig = {
         apiKey: "AIzaSyBSHlhNc19IjPFszn-KV2hmPSpu9YO6PMY",
@@ -43,11 +47,41 @@ export default class App extends Component {
             this.setState(state);
         })
     }
+
+    cadastrar(e){
+        //Inserindo um novo dado
+        //firebase.database().ref('token').set(this.state.tokenInput)
+        //editando valor
+        //firebase.database().ref('usuarios').child(1).child('idade').set(this.state.tokenInput)
+        //add atributo
+        //firebase.database().ref('usuarios').child(1).child('cargo').set(this.state.tokenInput)
+        //deletando um dado especifico
+        //firebase.database().ref('usuarios').child(1).child('cargo').remove()
+        //inseriondo novos dados na tabela
+        let usuarios = firebase.database().ref('usuarios')
+        let chave = usuarios.push().key
+
+        usuarios.child(chave).set({
+            nome: this.state.nomeInput,
+            idade: this.state.idadeInput
+        })
+        e.preventDefault()
+    }
    
    render(){
      const{ token, nome, idade } = this.state
      return(
      <div>
+
+         <form onSubmit={this.cadastrar}>
+            <input type="text" value={this.state.nomeInput}
+                onChange={(e) => this.setState({nomeInput: e.target.value})}/><br/>
+
+            <input type="text" value={this.state.idadeInput}
+                onChange={(e) => this.setState({idadeInput: e.target.value})}/><br/>
+
+            <button type="submit">Cadastrar</button>
+         </form>
        <h1>Token: {token}</h1>
        <h1>Nome: {nome}</h1>
        <h1>Idade: {idade}</h1>
