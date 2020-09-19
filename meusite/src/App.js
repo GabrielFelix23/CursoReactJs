@@ -1,56 +1,48 @@
 import React from 'react';
-import firebase from 'firebase';
+import firebase from './fireConnection'
  
 export default class App extends React.Component {
     constructor(props){
  
-     super(props);
-     this.state={
-        lista: [],
-     }
- 
-     let firebaseConfig = {
-        apiKey: "AIzaSyBSHlhNc19IjPFszn-KV2hmPSpu9YO6PMY",
-        authDomain: "reactjs-3f777.firebaseapp.com",
-        databaseURL: "https://reactjs-3f777.firebaseio.com",
-        projectId: "reactjs-3f777",
-        storageBucket: "reactjs-3f777.appspot.com",
-        messagingSenderId: "564769499349",
-        appId: "1:564769499349:web:8ed1aef108cdedc1ba1a5c"
-      };
-      // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
+        super(props);
+        this.state={
+            email: '',
+            senha: ''
         }
-    }
-    componentDidMount(){
-        firebase.database().ref('usuarios').on('value', (snapshot) => {
-            let state = this.state
-            state.lista = []
 
-            snapshot.forEach((ChildItem) => {
-                state.lista.push({
-                    key: ChildItem.key,
-                    nome: ChildItem.val().nome,
-                    idade: ChildItem.val().idade
-                })
-            })
-            this.setState(state)
+        this.cadastrar = this.cadastrar.bind(this)
+    }
+
+    cadastrar(e){
+
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.senha)
+        .catch((error) => {
+            if(error.code == 'auth/invalid-email'){
+                alert("Email inválido")
+            }
+            if(error.code == 'auth/weak-password'){
+                alert("Senha fraca!")
+            }else{
+                alert("Codigo de erro " + error.code)
+            }
         })
+        e.preventDefault()
     }
     
-   
    render(){
         return(
             <div>
-                {this.state.lista.map((item) => {
-                    return(
-                        <div>
-                            <h1>Olá {item.nome}</h1>
-                            <h2>Idade: {item.idade}</h2>
-                        </div>
-                    )
-                })}
+                <form onSubmit={this.cadastrar}>
+                    <label>Email: </label><br/>
+                    <input type="text" value={this.state.email} 
+                    onChange={(e) => this.setState({email: e.target.value})}/><br/>
+
+                    <label>Senha: </label><br/>
+                    <input type="text" value={this.state.senha} 
+                    onChange={(e) => this.setState({senha: e.target.value})}/><br/>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
             </div>
         )
    } 
