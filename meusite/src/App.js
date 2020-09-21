@@ -6,43 +6,45 @@ export default class App extends React.Component {
  
         super(props);
         this.state={
+            nome: '',
             email: '',
             senha: ''
         }
 
-        this.logar = this.logar.bind(this)
-        this.sair = this.sair.bind(this)
+        firebase.auth().signOut()
+
+        this.cadastrar = this.cadastrar.bind(this)
 
         firebase.auth().onAuthStateChanged((user) => {
             if(user){
-                alert("Usuario logado com sucesso! \n Email: " + user.email)
+                firebase.database().ref('usuarios').child(user.uid).set({
+                    nome: this.state.nome
+                })
+                .then(() => {
+                    this.setState({nome: '', email: '', senha: ''})
+                })
             }
         })
     }
 
-    logar(e){
+    cadastrar(e){
 
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.senha)
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.senha)
         .catch((error) => {
-            if(error.code == 'auth/wrong-password'){
-                alert("Senha incorreta")
-            }
-            else{
-                alert("Codigo de erro " + error.code)
-            }
+            alert("Codigo de erro " + error.code)
         })
         e.preventDefault()
-    }
-
-    sair(){
-        firebase.auth().signOut()
-        alert("Deslogado com sucesso!")
     }
     
    render(){
         return(
             <div>
-                <form onSubmit={this.logar}>
+                <h1>Novo Usuario</h1>
+                <form onSubmit={(e) => this.cadastrar(e)}>
+                    <label>Nome: </label><br/>
+                    <input type="text" value={this.state.nome} 
+                    onChange={(e) => this.setState({nome: e.target.value})}/><br/>
+
                     <label>Email: </label><br/>
                     <input type="text" value={this.state.email} 
                     onChange={(e) => this.setState({email: e.target.value})}/><br/>
@@ -51,10 +53,9 @@ export default class App extends React.Component {
                     <input type="text" value={this.state.senha} 
                     onChange={(e) => this.setState({senha: e.target.value})}/><br/>
 
-                    <button type="submit">Entrar</button>
+                    <button type="submit">Cadastrar</button>
                 </form>
-                <br/>
-                <button onClick={this.sair}>Sair</button>
+               
             </div>
         )
    } 
