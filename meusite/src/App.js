@@ -8,21 +8,25 @@ class App extends React.Component{
             email: '',
             senha: '' 
         }
-        this.cadastrar = this.cadastrar.bind(this)
+        this.logar = this.logar.bind(this)
+        this.sair = this.sair.bind(this)
+
+        //para ver se teve alguma mudança no usuario ex: login 
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user){
+                alert('Usuario logado com sucesso! \n Email: ' + user.email)
+            }
+        })
     }
 
-    cadastrar(e){
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.senha)
-        .then(() => {
-            alert("Cadastrado com sucesso!")
-        })
+    logar(e){
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.senha)
+
         .catch((error) => {
-            if(error.code === 'auth/incalid-email'){
-                alert("Email invelido!")
+            if(error.code === 'auth/wrong-password'){
+                alert("Senha incorreta!")
             }
-            if(error.code === 'auth/weak-password'){
-                alert('Senha Fraca!')
-            }else{
+            else{
                 alert("Codigo de error: " + error.code)
             }
         })
@@ -30,10 +34,17 @@ class App extends React.Component{
         e.preventDefault()
     }
 
+    sair(){
+        firebase.auth().signOut().then(() => {
+            alert("Usuario desconectado!")
+        })
+    }
+
     render(){
         return(
             <div>
-                <form onSubmit={this.cadastrar}>
+                <h1>Entrar</h1>
+                <form onSubmit={this.logar}>
                     <label>Email: </label><br/>
                     <input type="text" value={this.state.email}
                         onChange={(e) => this.setState({email: e.target.value})}/><br/>
@@ -42,8 +53,10 @@ class App extends React.Component{
                     <input type="text" value={this.state.senha}
                         onChange={(e) => this.setState({senha: e.target.value})}/><br/>
 
-                    <button type="submit">Cadastrar</button>
+                    <button type="submit">Entrar</button>
                 </form>
+                
+                <button onClick={this.sair}>Sair</button>
             </div>
         )
     }
