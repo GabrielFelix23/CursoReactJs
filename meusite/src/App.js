@@ -5,15 +5,8 @@ class App extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            nomeInput: '',
-            idadeInput: '',
-            tokenInput: '',
-            token: '',
-            nome: '',
-            idade: '',
-            cargo:''
+            lista: []
         }
-        this.cadastrar = this.cadastrar.bind(this)
 
         let firebaseConfig = {
             apiKey: "AIzaSyBKEAiZ-XOIzqaHrxTRCKFV1dqTdauKo1Y",
@@ -30,67 +23,34 @@ class App extends React.Component{
         }
     }
 
-        componentWillMount(){
-            firebase.database().ref('token').on('value', (snapshot) => {
-                this.setState({
-                    token: snapshot.val()
+    componentDidMount(){
+        firebase.database().ref('usuarios').on('value', (snapshot) => {
+            let state = this.state
+            state.lista = []
+
+            snapshot.forEach((childItem) => {
+                state.lista.push({
+                    key: childItem.key,
+                    nome: childItem.val().nome,
+                    idade: childItem.val().idade
                 })
             })
-        }
-
-        componentDidMount(){
-            firebase.database().ref('usuarios').child(1).on('value', (snapshot) => {
-                this.setState({
-                    nome: snapshot.val().nome,
-                    idade: snapshot.val().idade,
-                    cargo: snapshot.val().cargo
-                })
-            })
-        }
-
-        cadastrar(e){
-            //Inserindo um novo dado!
-            //firebase.database().ref('token').set(this.state.tokenInput)
-            //Alterando dado
-            //firebase.database().ref('token').set(this.state.tokenInput)
-            //Alterando dado de dentro de uma tabela
-            //firebase.database().ref('usuarios').child(1).child('idade').set(this.state.tokenInput)
-            //inserindo um novo dado
-            //firebase.database().ref('usuarios').child(1).child('cargo').set(this.state.tokenInput)
-            //Deletando um dado especifico
-            //firebase.database().ref('usuarios').child(1).child("cargo").remove()
-
-            let usuarios = firebase.database().ref('usuarios') 
-            let chave = usuarios.push().key
-
-            usuarios.child(chave).set({
-                nome: this.state.nomeInput,
-                idade: this.state.idadeInput
-            })
-            
-            e.preventDefault()
-        }
+            this.setState(state)
+        })
+    }
 
     render(){
-        const {token, nome, idade, cargo} = this.state
         return(
             <div>
-                <form onSubmit={this.cadastrar}>
-                    <label>Nome: </label><br/>
-                    <input type="text" value={this.state.nomeInput} 
-                        onChange={(e) => this.setState({nomeInput: e.target.value})}/><br/>
-                    
-                    <label>Idade: </label><br/>
-                    <input type="text" value={this.state.idadeInput} 
-                        onChange={(e) => this.setState({idadeInput: e.target.value})}/><br/><br/>
-                    
-                    <button type="submit">Cadastrar</button>
-                </form>
-
-                <h1>Token: {token}</h1>
-                <h1>Nome: {nome}</h1>
-                <h1>Idade: {idade}</h1>
-                <h1>Cargo: {cargo}</h1>
+               {this.state.lista.map((item) => {
+                   return(
+                        <div>
+                            <h1> id: {item.key}</h1>
+                            <h1>Olá {item.nome}</h1>
+                            <h2>Idade: {item.idade} anos</h2>
+                        </div>
+                   )
+               })}
             </div>
         )
     }
