@@ -10,15 +10,17 @@ let firebaseConfig = {
     storageBucket: "reactapp-d6c0a.appspot.com",
     messagingSenderId: "1051912974597",
     appId: "1:1051912974597:web:23f14409402a9ff730c76c"
-};
+}
 
 class Firebase{
     constructor(){
         // Initialize Firebase
         app.initializeApp(firebaseConfig);
+
+        this.app = app.database()
     }
     
-    login(email,password){
+    login(email, password){
         return app.auth().signInWithEmailAndPassword(email, password)
     }
 
