@@ -17,7 +17,7 @@ class Login extends React.Component{
     componentDidMount(){
         //verificar se tem algum user logado
         if(firebase.getCurrent()){
-            return this.props.history.replace('dashboard')
+            return this.props.history.replace('/dashboard')
         }
     }
 
@@ -31,16 +31,17 @@ class Login extends React.Component{
 
         try{
             await firebase.login(email,password)
+            .then(() => {
+                this.props.history.replace('/dashboard')
+            })
             .catch((error) => {
                 if(error.code === 'auth/user-not-found'){
                     alert("Este usuario não existe!")
                 }else{
-                    alert("Codigo de erro : " + error.code)
+                    alert("Codigo de erro: " + error.code)
                     return null
                 }
             })
-
-            this.props.history.replace('/dashboard')
         }catch(error){
             alert(error.message)
         }
