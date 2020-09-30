@@ -41,6 +41,11 @@ class Firebase{
         })
     }
 
+    getCurrent(){
+        //se o app.auth().currentUser for OK então usa o app.auth().currentUser.email
+        return app.auth().currentUser && app.auth().currentUser.email
+    }
+
 }
 
 export default new Firebase()

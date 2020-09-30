@@ -14,8 +14,16 @@ class Login extends React.Component{
         this.login = this.login.bind(this)
     }
 
+    componentDidMount(){
+        //verificar se tem algum user logado
+        if(firebase.getCurrent()){
+            return this.props.history.replace('dashboard')
+        }
+    }
+
     entrar(e){
         e.preventDefault()
+        this.login()
     }
 
     login = async () => {
@@ -31,6 +39,8 @@ class Login extends React.Component{
                     return null
                 }
             })
+
+            this.props.history.replace('/dashboard')
         }catch(error){
             alert(error.message)
         }
