@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import firebase from '../../firebase'
+import './dashboard.css'
 
 class Dashboard extends React.Component{
 
@@ -14,7 +15,7 @@ class Dashboard extends React.Component{
     async componentDidMount(){
         if(!firebase.getCurrent()){
             this.props.history.replace('/login')
-            //para o carregamento
+            //parar o carregamento
             return null
         }
 
@@ -26,8 +27,13 @@ class Dashboard extends React.Component{
         })
     }
 
-    logout(){
-
+    logout = async () => {
+        await firebase.logout()
+        .catch((error) => {
+            console.log(error)
+        })
+        localStorage.removeItem('nome')
+        this.props.history.push("/")
     }
 
     render() {
@@ -37,7 +43,7 @@ class Dashboard extends React.Component{
                     <h1>Ola {this.state.nome}</h1>
                     <Link to="/dashboard/new">Novo Post</Link>
                 </div>
-                <p>Logado com: gabriel@gmail.com</p>
+                <p>Logado com: {firebase.getCurrent()}</p>
                 <button onClick={() => this.logout()}>Deslogar</button>
             </div>
         );
