@@ -21,7 +21,7 @@ class New extends React.Component{
         return (
             <div>
                 <header id="new">
-                    <Link to="/dashboar">Voltar</Link>
+                    <Link to="/dashboard">Voltar</Link>
                 </header>
 
                 <form onSubmit={this.cadastrar} id="new-post">
