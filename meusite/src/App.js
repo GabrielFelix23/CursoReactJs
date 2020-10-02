@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Header from './components/Header'
 import Login from './components/Login' 
 import Dashboard from './components/Dashboard'
+import New from './components/New'
 import Register from './components/Register'
 
 import './global.css'
@@ -33,6 +34,8 @@ class App extends React.Component{
                     <Route exact path="/login" component={Login}/>
                     <Route exact path="/dashboard" component={Dashboard}/>
                     <Route exact path="/register" component={Register}/>
+                    <Route exact path="/dashboard/new" component={New}/>
+
 
                 </Switch>
             </BrowserRouter>
