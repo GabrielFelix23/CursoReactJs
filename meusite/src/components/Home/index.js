@@ -25,6 +25,7 @@ class Home extends React.Component{
                     autor: childItem.val().autor
                 })
             })
+            
             this.setState(state)
         })
     }

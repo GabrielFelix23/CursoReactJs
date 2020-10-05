@@ -32,6 +32,26 @@ form#new-post input{
     margin-bottom: 10px;
 }
 
+form#new-post span{
+    text-align: center;
+    color: #ff0000;
+    font-size: 15px
+}
+
+form#new-post label{
+    margin-bottom: 15px 
+}
+
+form#new-post img{
+    width: 200px;
+    height: 100px;
+    margin-bottom: 15px
+}
+
+form#new-post progress{
+    margin-bottom: 15px
+}
+
 form#new-post input[type=text]{
     height: 40px;
     border-radius: 5px;
