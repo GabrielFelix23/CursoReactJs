@@ -1,47 +1,28 @@
-import React, {Component} from 'react';
-import { BrowserRouter, Switch, Route} from 'react-router-dom';
-import firebase from './firebase';
+import React, {useState} from 'react'
 
-import Home from './components/Home';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import Register from './components/Register';
-import Header from './components/Header';
-import New from './components/New';
-import './global.css';
-import './app.css';
+function App(){
 
-class App extends Component{
+  const [tarefas, setTarefas] = useState([
+    'Pagar a conta de luz',
+    'Estudar React Hooks'
+  ])
+  const [input, setInput] = useState('')
 
-  state = {
-    firebaseInitialized: false
-  };
-
-  componentDidMount(){
-    firebase.isInitialized().then(resultado => {
-      // Devolve o usuario
-      this.setState({firebaseInitialized: resultado});
-    })
+  function handleAdd(){
+    setTarefas([...tarefas, input])
   }
-
-  render(){
-    return this.state.firebaseInitialized !== false ? (
-      <BrowserRouter>
-        <Header/>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/dashboard/new" component={New} />
-        </Switch>
-      </BrowserRouter>
-    ) : (
-      <div id="loading">
-        <h1>Carregando...</h1>
-      </div>
-    );
-  }
+  
+  return (
+    <div>
+        <ul>
+          {tarefas.map((tarefa) => (
+            <li key={tarefa}>{tarefa}</li>
+          ))}
+        </ul>
+        <input type="text" value={input} onChange={(e) => setInput(e.target.value)}/>
+        <button type="button" onClick={handleAdd}>Adicionar</button>
+    </div>
+  )
 }
 
-export default App;
+export default App
