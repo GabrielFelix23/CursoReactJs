@@ -26,7 +26,7 @@ export const Form = styled.form`
 
     input{
         flex: 1;
-        border: 1px solid #ddd;
+        border: 1px solid ${props => (props.error ? '#ff0000' : "#eee")};
         padding: 10px 15px;
         border-radius: 4px;
         font-size: 17px
@@ -80,7 +80,7 @@ export const List = styled.ul`
         padding: 15px 0;
         display: flex;
         flex-direction: row;
-        aling-items: center;
+        align-items: center;
         justify-content: space-between;
 
         & + li{
