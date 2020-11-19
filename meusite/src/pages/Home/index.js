@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+//serve para disparar uma ação
 import {useDispatch} from 'react-redux'
 import {MdFlightTakeoff} from 'react-icons/md'
 
@@ -23,6 +24,7 @@ export default function Home(){
             trip
         })
     }
+    
     return(
         <div className="box">
             {trips.map(trip => (
