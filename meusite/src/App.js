@@ -1,20 +1,28 @@
-import React from 'react'
-import {BrowserRouter} from 'react-router-dom'
-import {Provider} from 'react-redux'
-
-import Routes from './router'
-import Header from './components/Header'
-
-import store from './store'
+import React, {useState} from 'react'
 
 function App(){
+  const [tarefas, setTarefas] = useState([
+    'Pagar a conta de luz',
+    'Estudar React Hooks'
+  ])
+  
+  const [input, setInput] = useState('')
+  
+  function handleAdd(){
+    setTarefas([...tarefas, input])
+  }
+
   return(
-    <Provider store={store}>
-      <BrowserRouter>
-        <Header/>
-        <Routes/>
-      </BrowserRouter>
-    </Provider>
+    <div>
+      <ul>
+        {tarefas.map(tarefa => (
+          <li key={tarefa}>{tarefa}</li>
+        ))}
+      </ul>
+      
+      <input type="text" value={input} onChange={(e) => setInput(e.target.value)}/>
+      <button type="button" onClick={handleAdd}>Adicionar</button>
+    </div>
   )
 }
 
