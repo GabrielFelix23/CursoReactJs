@@ -1,12 +1,22 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 function App(){
-  const [tarefas, setTarefas] = useState([
-    'Pagar a conta de luz',
-    'Estudar React Hooks'
-  ])
+  const [tarefas, setTarefas] = useState([])
   
   const [input, setInput] = useState('')
+
+  useEffect(() => {
+    const tarefasStorange = localStorage.getItem('tarefas')
+
+    if(tarefasStorange){
+      setTarefas(JSON.parse(tarefasStorange))     
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas))
+  }, [tarefas])
+  
   
   function handleAdd(){
     setTarefas([...tarefas, input])
